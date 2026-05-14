@@ -64,7 +64,7 @@ export default function ResetPasswordForm() {
           maxWidth: 440,
         }}
       >
-        Create a password with at least 6 letters and numbers. You'll need this password to log
+        Create a password with at least 6 letters and numbers. You&apos;ll need this password to log
         into your account.
       </p>
 

@@ -53,7 +53,7 @@ export default function ConfirmPasswordForm() {
           maxWidth: 430,
         }}
       >
-        To continue, please enter your current password to verify it's you.
+        To continue, please enter your current password to verify it&apos;s you.
       </p>
 
       <PasswordInput
