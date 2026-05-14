@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import GradientOverlay from "@/components/ui/GradientOverlay";
+import InstagramWordmark from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 
 interface PasswordResetLayoutProps {
@@ -32,15 +33,37 @@ export default function PasswordResetLayout({ children }: PasswordResetLayoutPro
       <header
         style={{
           position: "relative",
-          zIndex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "20px 24px 0",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 50,
         }}
         className="md:hidden"
       >
-        <Image
+        {/* maxWidth + padding harus identik dengan wrapper konten di page.tsx */}
+        <div
+          style={{
+            maxWidth: 480,
+            margin: "0 auto",
+            padding: "0 24px",
+            columnGap: 10,
+            height: 52,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Image 
+          src="/instagram.png"
+          alt="Instagram Logo"
+          width={24}
+          height={24}
+          priority
+          style={{
+            opacity: mounted ? 1 : 0,
+            transition: "opacity 0.7s ease",
+          }}
+          />
+          <Image
           src="/instagram-logo.svg"
           alt="Instagram"
           width={103}
@@ -50,8 +73,9 @@ export default function PasswordResetLayout({ children }: PasswordResetLayoutPro
             filter: "invert(1)",
             opacity: mounted ? 1 : 0,
             transition: "opacity 0.7s ease",
-          }}
-        />
+            }}
+          />
+        </div>
       </header>
 
       <main

@@ -1,46 +1,43 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { resetPasswordSchema } from "@/lib/validations/password";
 import PasswordInput from "@/components/ui/PasswordInput";
 import PasswordSuccessView from "@/components/password/PasswordSuccessView";
 
 export default function ResetPasswordForm() {
+  const router = useRouter();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [logoutEverywhere, setLogoutEverywhere] = useState(false);
   const [errors, setErrors] = useState<{ password?: string; confirmPassword?: string }>({});
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = () => {
+const handleSubmit = () => {
     const result = resetPasswordSchema.safeParse({
-      password,
-      confirmPassword,
-      logoutEverywhere,
+      newPassword: password, 
+      confirmPassword: confirmPassword,
     });
 
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
+      
       for (const issue of result.error.issues) {
-        const field = issue.path[0] as string;
+        let field = issue.path[0] as string;
+        if (field === "newPassword") {
+          field = "password";
+        }
+
         if (!fieldErrors[field]) fieldErrors[field] = issue.message;
       }
+      
       setErrors(fieldErrors);
       return;
     }
 
     setErrors({});
-    setSubmitted(true);
+    router.push("/accounts/password/reset/success");
   };
-
-  if (submitted) {
-    return (
-      <PasswordSuccessView
-        title="Password updated!"
-        description="Your password has been reset successfully. You can now log in with your new password."
-      />
-    );
-  }
 
   return (
     <>
@@ -88,17 +85,17 @@ export default function ResetPasswordForm() {
         }}
       />
 
-      {/* Logout everywhere checkbox */}
-      <label
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          gap: 12,
-          cursor: "pointer",
-          marginBottom: 24,
-        }}
-      >
-        <div style={{ position: "relative", marginTop: 1, flexShrink: 0 }}>
+        {/* Logout everywhere checkbox */}
+        <div
+            style={{
+            display: "flex",
+            alignItems: "flex-start",
+            gap: 12,
+            marginBottom: 24,
+            }}
+        >
+        {/* Tag label sekarang CUMA ngebungkus kotak checkbox */}
+        <label style={{ position: "relative", marginTop: 1, flexShrink: 0, cursor: "pointer" }}>
           <input
             type="checkbox"
             checked={logoutEverywhere}
@@ -107,9 +104,6 @@ export default function ResetPasswordForm() {
             aria-label="Log out everywhere else"
           />
           <div
-            role="checkbox"
-            aria-checked={logoutEverywhere}
-            onClick={() => setLogoutEverywhere((prev) => !prev)}
             style={{
               width: 20,
               height: 20,
@@ -120,7 +114,6 @@ export default function ResetPasswordForm() {
               alignItems: "center",
               justifyContent: "center",
               transition: "all 0.18s ease",
-              cursor: "pointer",
             }}
           >
             {logoutEverywhere && (
@@ -135,11 +128,13 @@ export default function ResetPasswordForm() {
               </svg>
             )}
           </div>
-        </div>
+        </label>
+        
+        {/* Teks sekarang ada di luar label, jadi nggak akan bisa diklik buat nyentang */}
         <span style={{ color: "#e0e0e0", fontSize: 14, lineHeight: 1.5 }}>
           Log out everywhere else to make sure no one else can still access your account
         </span>
-      </label>
+      </div>
 
       <button
         onClick={handleSubmit}

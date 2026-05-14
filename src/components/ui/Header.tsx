@@ -1,4 +1,4 @@
-export default function InstagramWordmark() {
+export default function Header() {
   return (
     <svg
       width="105"

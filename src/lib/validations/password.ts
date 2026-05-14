@@ -2,7 +2,7 @@
 import { z } from "zod"
 
 export const confirmPasswordSchema = z.object({
-  currentPassword: z.string().min(1, "Please enter your current password."),
+  currentPassword: z.string().min(6, "Please enter your current password."),
 })
 
 export const resetPasswordSchema = z.object({

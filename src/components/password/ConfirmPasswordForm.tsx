@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { confirmPasswordSchema } from "@/lib/validations/password";
 import PasswordInput from "@/components/ui/PasswordInput";
-import PasswordSuccessView from "@/components/password/PasswordSuccessView";
 
 export default function ConfirmPasswordForm() {
+  const router = useRouter();
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = () => {
     const result = confirmPasswordSchema.safeParse({ currentPassword: password });
@@ -19,17 +19,22 @@ export default function ConfirmPasswordForm() {
     }
 
     setError("");
-    setSubmitted(true);
-  };
 
-  if (submitted) {
-    return (
-      <PasswordSuccessView
-        title="Identity confirmed!"
-        description="Your password is correct. You can now proceed to reset your password."
-      />
-    );
-  }
+    // 2. CEK KE BACKEND (Contoh kalau nanti udah nyambung API)
+    /*
+    const response = await fetch('/api/verify-password', {
+      method: 'POST',
+      body: JSON.stringify({ password })
+    });
+    
+    if (!response.ok) {
+      setError("Incorrect password. Please try again.");
+      return;
+    }
+    */
+
+    router.push("/accounts/password/reset/");
+  };
 
   return (
     <>
