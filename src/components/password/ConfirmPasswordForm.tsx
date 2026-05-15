@@ -48,18 +48,23 @@ export default function ConfirmPasswordForm() {
       />
 
       <a
-        href="#"
-        onClick={(e) => e.preventDefault()}
+        href="https://www.instagram.com/accounts/password/reset/"
+        target="_blank"
+        rel="noopener noreferrer"
         style={{
-          display: "inline-block",
-          color: "#0095f6",
-          fontSize: 13,
-          textDecoration: "none",
-          marginBottom: 22,
-          transition: "color 0.15s",
+            display: "inline-block",
+            color: "#0095f6",
+            fontSize: 13,
+            textDecoration: "none",
+            marginBottom: 22,
+            transition: "color 0.15s",
         }}
-        onMouseEnter={(e) => ((e.target as HTMLAnchorElement).style.color = "#1aa3ff")}
-        onMouseLeave={(e) => ((e.target as HTMLAnchorElement).style.color = "#0095f6")}
+        onMouseEnter={(e) =>
+            ((e.target as HTMLAnchorElement).style.color = "#1aa3ff")
+        }
+        onMouseLeave={(e) =>
+            ((e.target as HTMLAnchorElement).style.color = "#0095f6")
+        }
       >
         Forgot your password?
       </a>

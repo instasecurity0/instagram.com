@@ -1,3 +1,4 @@
+// src/app/accounts/password/reset/layout.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -22,8 +23,6 @@ export default function PasswordResetLayout({ children }: PasswordResetLayoutPro
       style={{
         minHeight: "100vh",
         backgroundColor: "#1a1a1a",
-        fontFamily:
-          "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       }}
     >
       <GradientOverlay visible={!mounted} />

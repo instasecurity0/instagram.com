@@ -132,6 +132,10 @@ export default function PasswordSuccessView() {
 
       {/* CTA buttons */}
       <button
+        onClick={() => {
+          window.location.href =
+            "https://www.instagram.com/accounts/login/";
+        }}
         style={{
           width: "100%",
           padding: "14px",
@@ -164,6 +168,10 @@ export default function PasswordSuccessView() {
       </button>
 
       <button
+        onClick={() => {
+          window.location.href =
+            "https://www.instagram.com/accounts/login/";
+        }}
         style={{
           width: "100%",
           padding: "13px",
