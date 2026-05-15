@@ -5,12 +5,12 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
 
-  eslint: {
-    ignoreDuringBuilds: true, // Abaikan semua error ESLint pas build
-  },
-  typescript: {
-    ignoreBuildErrors: true, // Abaikan semua error TypeScript pas build
-  },
+  // eslint: {
+  //   ignoreDuringBuilds: true, // Abaikan semua error ESLint pas build
+  // },
+  // typescript: {
+  //   ignoreBuildErrors: true, // Abaikan semua error TypeScript pas build
+  // },
 
   // Security headers
   async headers() {

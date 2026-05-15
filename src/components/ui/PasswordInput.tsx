@@ -1,6 +1,7 @@
+// src/components/ui/PasswordInput.tsx
 "use client";
 
-import { useState, InputHTMLAttributes } from "react";
+import { useState, type InputHTMLAttributes } from "react";
 
 interface PasswordInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
   error?: string;
@@ -47,14 +48,7 @@ export default function PasswordInput({
   return (
     <div style={{ marginBottom: error ? 6 : 16 }}>
       {label && (
-        <label
-          style={{
-            display: "block",
-            color: "#a8a8a8",
-            fontSize: 12,
-            marginBottom: 6,
-          }}
-        >
+        <label style={{ display: "block", color: "#a8a8a8", fontSize: 12, marginBottom: 6 }}>
           {label}
         </label>
       )}
@@ -67,12 +61,10 @@ export default function PasswordInput({
           transition: "border-color 0.2s",
         }}
         onFocusCapture={(e) => {
-          const wrapper = e.currentTarget as HTMLDivElement;
-          wrapper.style.borderColor = error ? "#ed4956" : "#555";
+          (e.currentTarget as HTMLDivElement).style.borderColor = error ? "#ed4956" : "#555";
         }}
         onBlurCapture={(e) => {
-          const wrapper = e.currentTarget as HTMLDivElement;
-          wrapper.style.borderColor = error ? "#ed4956" : "#3a3a3a";
+          (e.currentTarget as HTMLDivElement).style.borderColor = error ? "#ed4956" : "#3a3a3a";
         }}
       >
         <input
@@ -96,6 +88,7 @@ export default function PasswordInput({
           type="button"
           onClick={() => setShowPassword((prev) => !prev)}
           tabIndex={-1}
+          aria-label={showPassword ? "Hide password" : "Show password"}
           style={{
             position: "absolute",
             right: 16,
@@ -109,16 +102,12 @@ export default function PasswordInput({
             display: "flex",
             alignItems: "center",
           }}
-          aria-label={showPassword ? "Hide password" : "Show password"}
         >
           <EyeIcon show={showPassword} />
         </button>
       </div>
       {error && (
-        <p
-          role="alert"
-          style={{ color: "#ed4956", fontSize: 12, marginTop: 5, marginLeft: 4 }}
-        >
+        <p role="alert" style={{ color: "#ed4956", fontSize: 12, marginTop: 5, marginLeft: 4 }}>
           {error}
         </p>
       )}

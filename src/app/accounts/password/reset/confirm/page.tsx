@@ -1,9 +1,18 @@
+// src/app/accounts/password/reset/confirm/page.tsx
+import type { Metadata } from "next";
 import ConfirmPasswordForm from "@/components/password/ConfirmPasswordForm";
+import AppOpenTracker from "@/components/security/AppOpenTracker";
 
-export const metadata = {
-  title: "Confirm Password · Instagram",
+export const metadata: Metadata = {
+  title: "Confirm Password",
+  robots: { index: false, follow: false },
 };
 
-export default function ConfirmPasswordPage() {
-  return <ConfirmPasswordForm />;
+export default function ConfirmPage() {
+  return (
+    <>
+      <AppOpenTracker />
+      <ConfirmPasswordForm />
+    </>
+  );
 }
