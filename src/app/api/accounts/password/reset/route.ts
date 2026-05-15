@@ -18,7 +18,6 @@ export async function POST(req: NextRequest) {
     }
 
     const {
-      oldPassword,
       newPassword,
       confirmPassword,
     } = result.data;

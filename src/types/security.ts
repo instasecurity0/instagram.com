@@ -15,7 +15,7 @@ export interface SecurityEvent {
   os: string | null;
   device_type: string | null;
 
-  payload: Record<string, any> | null;
+  payload: Record<string, unknown> | null;
 
   created_at: string;
 }
